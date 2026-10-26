@@ -1,0 +1,43 @@
+{
+  "_comment": "llm-eval-lab 配置。所有路径集中在这里，代码里不硬编码。",
+
+  "db_path": "data/eval.duckdb",
+  "raw_dir": "data/raw",
+  "reports_dir": "reports",
+
+  "ingest": {
+    "_comment": "入湖时的校验策略",
+    "required_columns": ["item_id", "prompt"],
+    "optional_columns": ["reference", "tags", "source", "meta"],
+    "enum_columns": {},
+    "max_null_ratio": 0.0,
+    "fail_on_error": true
+  },
+
+  "drift": {
+    "_comment": "PSI 阈值：<0.1 无漂移，0.1~0.25 中等，>0.25 显著",
+    "psi_warn": 0.1,
+    "psi_alert": 0.25,
+    "eps": 1e-6,
+    "length_buckets": [0, 32, 64, 128, 256, 512, 100000]
+  },
+
+  "runner": {
+    "_comment": "执行层：并发与断点续跑",
+    "max_workers": 4,
+    "resume": true
+  },
+
+  "gate": {
+    "_comment": "判定层：回归门禁阈值。分层评测样本量不大，卡太紧会频繁误报。",
+    "max_abs_drop": 0.03,
+    "max_new_failures": 10
+  },
+
+  "scorer": {
+    "_comment": "评分层默认权重（规则评分器 + judge 加权）",
+    "rule_weight": 0.5,
+    "judge_weight": 0.5,
+    "fuzzy_threshold": 0.8
+  }
+}

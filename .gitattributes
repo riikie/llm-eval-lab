@@ -1,0 +1,2 @@
+# 统一换行符为 LF：pre-commit 是 bash 脚本，CRLF 会让钩子在 Windows 上失效
+* text=auto eol=lf

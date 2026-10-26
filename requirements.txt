@@ -1,0 +1,20 @@
+# llm-eval-lab 依赖
+
+# 锁版本：numpy 1.x 是硬约束。
+# 升到 2.x 会打崩 pandas 1.5.3 的二进制兼容（报 numpy.dtype size changed:
+# Expected 96 from C header, got 88）。
+
+duckdb==1.5.6
+numpy==1.23.5
+pandas==1.5.3
+pytest==7.1.2
+
+# duckdb 从 0.10.2 升到 1.5.6：旧库照常可读（实测 0.10 建的库能直接打开），
+# Parquet 支持和 SQL 语法更好。不想升就改回 0.10.2，代码不受影响。
+
+# 需要接真实模型时才装：
+# fastapi>=0.115      （低于此版本，starlette 的 TestClient 与 httpx 0.28 不兼容）
+#
+# 明确不要装：
+#   onnx / onnxruntime —— 会把 numpy 顶到 2.x，回退后 DLL 又加载失败。
+#                        上一项目两次失败后放弃，别再试。

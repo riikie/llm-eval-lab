@@ -1,0 +1,20 @@
+# Python 运行残留
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# 运行产物：全部可由 scripts/run_all.py 重新生成，不入库
+data/*.duckdb
+data/*.duckdb.wal
+reports/
+
+# 本地环境 / 凭证
+.env
+*.log
+*.key
+
+# 求职材料：本地留着看，不进仓库（含面试话术与自我包装策略，不适合公开）
+RESUME_TALK.md
