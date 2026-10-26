@@ -30,7 +30,7 @@ def _resolve(con, dataset: str, spec_or_id: str) -> str:
     不手写 run_id 是有理由的：run_id 里含应用指纹，指纹规则一变
     （比如以后把 temperature 也算进去），硬编码的 run_id 就全部失效。
     """
-    if con.execute("SELECT 1 FROM runs WHERE run_id = ?", [spec_or_id]).fetchone():
+    if con.execute("SELECT 1 FROM runs WHERE run_id = ?", [spec_or_id]).fetchall():
         return spec_or_id
     if not dataset:
         raise SystemExit(f"找不到 run {spec_or_id}；若想用应用规格请加 --dataset")

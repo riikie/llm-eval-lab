@@ -28,7 +28,7 @@ import calibration as C  # noqa: E402
 
 def resolve(con, dataset: str, spec_or_id: str) -> str:
     """把 run_id 或应用规格都解析成 run_id。"""
-    hit = con.execute("SELECT 1 FROM runs WHERE run_id = ?", [spec_or_id]).fetchone()
+    hit = con.execute("SELECT 1 FROM runs WHERE run_id = ?", [spec_or_id]).fetchall()
     if hit:
         return spec_or_id
     if not dataset:

@@ -146,10 +146,10 @@ def latest_attempt(con, run_id: str) -> int:
     try:
         r = con.execute(
             "SELECT COALESCE(MAX(attempt), 0) FROM outputs WHERE run_id = ?", [run_id]
-        ).fetchone()
+        ).fetchall()
     except Exception:
         return 0
-    return int(r[0]) if r and r[0] is not None else 0
+    return int(r[0][0]) if r and r[0][0] is not None else 0
 
 
 def next_attempt(con, run_id: str) -> int:
@@ -159,8 +159,8 @@ def next_attempt(con, run_id: str) -> int:
 def attempt_size(con, run_id: str, attempt: int) -> int:
     r = con.execute(
         "SELECT COUNT(*) FROM outputs WHERE run_id = ? AND attempt = ?", [run_id, attempt]
-    ).fetchone()
-    return int(r[0]) if r else 0
+    ).fetchall()
+    return int(r[0][0]) if r else 0
 
 
 # --------------------------------------------------------------------------

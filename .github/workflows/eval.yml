@@ -20,7 +20,7 @@ jobs:
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install pytest numpy pandas duckdb
+          pip install -r requirements.txt
       - name: Run unit tests
         run: pytest tests/ -q
 
@@ -42,7 +42,7 @@ jobs:
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install pytest numpy pandas duckdb
+          pip install -r requirements.txt
 
       - name: Generate eval set + ingest
         run: |

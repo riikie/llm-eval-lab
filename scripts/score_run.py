@@ -50,12 +50,14 @@ def main() -> int:
         args.run_id = R.make_run_id(args.dataset, app)
 
     con = S.connect(args.db or None)
+    # fetchall 而非 fetchone：聚合/查找结果若不读完，duckdb 1.x 会把
+    # 连接标记为"有未完成结果"，下一个 execute/register 直接报错。
     run = con.execute(
         "SELECT dataset_id, app_name, app_version FROM runs WHERE run_id = ?", [args.run_id]
-    ).fetchone()
+    ).fetchall()
     if not run:
         raise SystemExit(f"找不到 run {args.run_id}，先跑 scripts/run_batch.py")
-    dataset_id = run[0]
+    dataset_id = run[0][0]
 
     df = R.join_items_outputs(con, dataset_id, args.run_id)
     scorer = build_scorer(args)

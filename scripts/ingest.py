@@ -66,7 +66,7 @@ def main() -> int:
 
     total = con.execute(
         "SELECT count(*) FROM items WHERE dataset_id = ?", [args.dataset_id]
-    ).fetchone()[0]
+    ).fetchall()[0][0]
     print(f"[核对] 库中 {args.dataset_id} 共 {total} 条")
 
     rc = 0
